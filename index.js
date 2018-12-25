@@ -15,13 +15,12 @@ if(cluster.isMaster) {
 
     // Loading the CPU and blocking the event loop
 
-    function doWork(duration) {
-        const start = Date.now();
-        while(Date.now() - start < duration) { }
-    };
+    // function doWork(duration) {
+    //     const start = Date.now();
+    //     while(Date.now() - start < duration) { }
+    // };
 
     app.get('/', (req, res) => {
-        doWork(5000);
         res.send('Hi there');
     });
     app.get('/fast', (req, res) => {
