@@ -1,16 +1,24 @@
-const express = require('express');
+const cluster = require('cluster');
 
-const app = express();
+// Checking if instance is cluster manager
 
-// Loading the CPU and blocking the event loop
+if(cluster.isMaster) {
+    // Executing one more time in childMode
+    cluster.fork();
+} else {
+    const express = require('express');
 
-function doWork(duration) {
-    const start = Date.now();
-    while(Date.now() - start < duration) { }
+    const app = express();
+
+    // Loading the CPU and blocking the event loop
+
+    function doWork(duration) {
+        const start = Date.now();
+        while(Date.now() - start < duration) { }
+    };
+
+    app.get('/', (req, res) => {
+        res.send('Hi there');
+    });
+    app.listen(9090);
 }
-
-app.get('/', (req, res) => {
-    res.send('Hi there');
-});
-
-app.listen(9090);
