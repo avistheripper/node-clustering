@@ -2,6 +2,7 @@ module.exports = {
   googleClientID:
     '964808011168-29vqsooppd769hk90kjbjm5gld0glssb.apps.googleusercontent.com',
   googleClientSecret: 'KnH-rZC23z4fr2CN4ISK4srN',
-  mongoURI: 'mongodb://<Avis>:<Avistheripper25812>@ds117334.mlab.com:17334/avistheripper',
+  mongoURI: 'mongodb://IgorDrozdov:Avistheripper25812@ds145194.mlab.com:45194/blog_dev',
   cookieKey: '123123123'
 };
+
