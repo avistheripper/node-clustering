@@ -3,6 +3,10 @@ const requireLogin = require('../middlewares/requireLogin');
 
 const Blog = mongoose.model('Blog');
 
+// @GET api/blogs/:id - get a blog from DB by id
+// @GET api/blogs - get all blog for user
+// @POST api/blogs - create new blog in DB
+
 module.exports = app => {
   app.get('/api/blogs/:id', requireLogin, async (req, res) => {
     const blog = await Blog.findOne({
