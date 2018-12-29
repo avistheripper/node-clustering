@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 import Header from './Header';
-import Landing from './Landing';
-import Dashboard from './Dashboard';
+import { Landing } from './Landing';
+import { Dashboard } from './Dashboard';
 import BlogNew from './blogs/BlogNew';
 import BlogShow from './blogs/BlogShow';
 
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div className="container">
         <BrowserRouter>
-          <Fragment>
+          <div>
             <Header />
             <Switch>
               <Route path="/blogs/new" component={BlogNew} />
@@ -26,7 +26,7 @@ class App extends Component {
               <Route path="/blogs" component={Dashboard} />
               <Route path="/" component={Landing} />
             </Switch>
-          </Fragment>
+            </div>
         </BrowserRouter>
       </div>
     );
