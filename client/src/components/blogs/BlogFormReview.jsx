@@ -9,7 +9,6 @@ import * as actions from '../../actions';
 class BlogFormReview extends Component {
   renderFields() {
     const { formValues } = this.props;
-
     return _.map(formFields, ({ name, label }) => {
       return (
         <div key={name}>
@@ -19,7 +18,6 @@ class BlogFormReview extends Component {
       );
     });
   }
-
   renderButtons() {
     const { onCancel } = this.props;
 
@@ -41,12 +39,9 @@ class BlogFormReview extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
     const { submitBlog, history, formValues } = this.props;
-
     submitBlog(formValues, history);
   }
-
   render() {
     return (
       <form onSubmit={this.onSubmit.bind(this)}>
