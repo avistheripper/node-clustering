@@ -6,32 +6,32 @@ import { Link } from 'react-router-dom';
 import BlogField from './BlogField';
 import formFields from './formFields';
 
+const BLOG_FORM = 'blogForm';
+
 class BlogForm extends Component {
   renderFields() {
-    return _.map(formFields, ({ label, name }) => {
-      return (
-        <Field
-          key={name}
-          component={BlogField}
-          type="text"
-          label={label}
-          name={name}
-        />
+    return _.map(formFields, ({ label, name }) => 
+      <Field
+        key={name}
+        component={BlogField}
+        type="text"
+        label={label}
+        name={name}
+      />
       );
-    });
   }
-
   render() {
+    const { handleSubmit, onBlogSubmit } = this.props;
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(this.props.onBlogSubmit)}>
+        <form onSubmit={handleSubmit(onBlogSubmit)}>
           {this.renderFields()}
           <Link to="/blogs" className="red btn-flat white-text">
             Cancel
           </Link>
           <button type="submit" className="teal btn-flat right white-text">
             Next
-            <i className="material-icons right">done</i>
+            <i className="material-icons right">Done</i>
           </button>
         </form>
       </div>
@@ -53,6 +53,6 @@ function validate(values) {
 
 export default reduxForm({
   validate,
-  form: 'blogForm',
+  form: BLOG_FORM,
   destroyOnUnmount: false
 })(BlogForm);
