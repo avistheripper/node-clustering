@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div className="container">
         <BrowserRouter>
-          <div>
+          <Fragment>
             <Header />
             <Switch>
               <Route path="/blogs/new" component={BlogNew} />
@@ -26,7 +26,7 @@ class App extends Component {
               <Route path="/blogs" component={Dashboard} />
               <Route path="/" component={Landing} />
             </Switch>
-          </div>
+          </Fragment>
         </BrowserRouter>
       </div>
     );
