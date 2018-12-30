@@ -18,9 +18,10 @@ module.exports = app => {
   });
 
   app.get('/api/blogs', requireLogin, async (req, res) => {
-    // redis caching common logic
+    // redis caching common logic client.flushall() to wipe out all the data
+    
       const redis = require('redis');
-      const redisUrl = 'redis://127.0.0.1:6479';
+      const redisUrl = 'redis://127.0.0.1:6379';
       const client = redis.createClient(redisUrl);
       const util = require('util');
 
@@ -28,13 +29,11 @@ module.exports = app => {
       
       const cachedBlogs = await client.get(req.user.id);
       if(cachedBlogs) {
-        res.send(cachedBlogs);
-      } else {
-        const blogs = await Blog.find({ _user: req.user.id });
-        client.set(req.user.id, blogs);
-        res.send(blogs);
+        return res.send(JSON.parse(cachedBlogs));
       }
-
+        const blogs = await Blog.find({ _user: req.user.id });
+        client.set(req.user.id, JSON.stringify(blogs));
+        res.send(blogs);
   });
 
   app.post('/api/blogs', requireLogin, async (req, res) => {
