@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const redis = require('redis');
 
 const requireLogin = require('../middlewares/requireLogin');
 
