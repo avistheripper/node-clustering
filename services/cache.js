@@ -8,8 +8,10 @@ const client = redis.createClient(redisUrl);
 // redis caching common logic client.flushall() to wipe out all the data
 // MUST be hooked in 'async/await' manner! Better use async-redis instead of straight up one.
 
-mongoose.Query.prototype.cache = function () {
+mongoose.Query.prototype.cache = function(options = {}) {
     this.useCache = true;
+    // in case nested caching replace get/set with hget/hset
+    this.hashKey = JSON.stringify(options.key || '');
     return this;
 }
 
@@ -24,8 +26,7 @@ mongoose.Query.prototype.exec = async function () {
             {collection: this.mongooseCollection.name}
         )
     );
-     const cacheValue = await client.get(key);
-
+    const cacheValue = await client.get(key);
     if (cacheValue) {
         const doc = JSON.parse(cacheValue);
 
@@ -36,7 +37,7 @@ mongoose.Query.prototype.exec = async function () {
 
     const result = await exec.apply(this, arguments);
 
-    await client.set(key, JSON.stringify(result));
+    await client.set(key, JSON.stringify(result), 'EX', 10);
 
   return result;
 };
