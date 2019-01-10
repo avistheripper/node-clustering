@@ -1,15 +1,21 @@
 const puppet = require('puppeteer');
 
-test('Header component', () => {
-    expect(2*2).toEqual(4);
+let browser, page;
+
+beforeEach(async () => {
+    browser = await puppet.launch({
+        headless: false // set to true if the chromium doesn't need to be opened
+    });
+    page = await browser.newPage();
+    await page.goto('localhost:3000');
+});
+
+afterEach(async () => {
+    await browser.close();
 });
 
 test('Initial app test', async () => {
-    const browser = await puppet.launch({
-        headless: false
-    });
-    const page = await browser.newPage();
-    await page.goto('localhost:3000');
+
     const text = await page.$eval('a.brand-logo', el => el.innerHTML);
 
     expect(text).toEqual('Blogster');
